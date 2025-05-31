@@ -42,15 +42,7 @@ export default function MyGamesPage() {
     api
       .get("/games/waiting/")
       .then((res) => {
-        const waitingGamesFormatted = (res.data.waiting_games || []).map(
-          (game) => ({
-            ...game,
-            created_by: {
-              username: game.created_by,
-              avatar: "http://127.0.0.1:8000/media/avatars/default_avatar.png",
-            },
-          })
-        );
+        const waitingGamesFormatted = (res.data.waiting_games || [])
         setWaitingGames(waitingGamesFormatted);
       })
       .catch(() => setWaitingGames([]));

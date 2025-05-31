@@ -70,8 +70,8 @@ const FinishedGameCard = ({ game }) => {
           )}
           <img
             className="player-avatar"
-            src={player1.avatar}
-            alt={player1.username}
+            src={player2.avatar}
+            alt={player2.username}
           />
           <div className="username">{player2.username}</div>
           <div className="score">امتیاز: {player2.score}</div>

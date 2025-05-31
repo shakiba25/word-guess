@@ -15,72 +15,26 @@ const FarsiLetters = [
 ];
 
 export default function GameBoardPage() {
-  const { gameId } = useParams(); // گرفتن شناسه بازی از url
-  const navigate = useNavigate(); // برای هدایت صفحه
+  const { gameId } = useParams();
+  const navigate = useNavigate();
 
-  // stateها برای مدیریت داده‌ها و وضعیت‌های مختلف صفحه
-  const [wordLength, setWordLength] = useState(0); // طول کلمه بازی
-  const [foundLetters, setFoundLetters] = useState(Array(12).fill("")); // حروف درست پیدا شده (نمایش داده شده)
-  const [selectedIndex, setSelectedIndex] = useState(null); // اندیس جعبه انتخاب شده برای وارد کردن حرف
-  const [tempLetters, setTempLetters] = useState(Array(12).fill("")); // حروف موقت وارد شده (قبل از ثبت حدس)
-  const [username, setProfile] = useState(null); // نام کاربری بازیکن خودی
-  const [timeRemainingSeconds, setTimeRemainingSeconds] = useState(0); // زمان باقی‌مانده به ثانیه
-  const [game, setGame] = useState(null); // اطلاعات بازی (از سرور)
-  const [hasWinner, setHasWinner] = useState(false); // آیا برنده‌ای وجود دارد یا خیر
-  
-  // برای مدیریت مودال راهنمای حرف
+  const [wordLength, setWordLength] = useState(0);
+  const [foundLetters, setFoundLetters] = useState(Array(12).fill(""));
+  const [selectedIndex, setSelectedIndex] = useState(null);
+  const [tempLetters, setTempLetters] = useState(Array(12).fill(""));
+  const [username, setProfile] = useState(null);
+  const [timeRemainingSeconds, setTimeRemainingSeconds] = useState(0);
+  const [game, setGame] = useState(null);
+  const [hasWinner, setHasWinner] = useState(false);
   const [showLetterHintModal, setShowLetterHintModal] = useState(false);
   const [letterHintPosition, setLetterHintPosition] = useState("");
 
-  // useEffect(() => {
-  //   const ws = new WebSocket(`ws://127.0.0.1:8000/ws/game/${gameId}/`);
-
-  //   ws.onopen = () => {
-  //     console.log("WebSocket connected");
-  //   };
-
-  //   ws.onmessage = (event) => {
-  //     try {
-  //       const data = JSON.parse(event.data);
-  //       if (data.type === "game_update") {
-  //         // استفاده از axios (api) برای گرفتن وضعیت بازی
-  //         api
-  //           .get(`/games/${gameId}/status`)
-  //           .then((res) => {
-  //             setGame(res.data);
-  //           })
-  //           .catch((err) => {
-  //             console.error("خطا در دریافت وضعیت بازی با api:", err);
-  //           });
-  //       }
-  //     } catch (e) {
-  //       console.error("خطا در پارس کردن پیام وب‌سوکت", e);
-  //     }
-  //   };
-
-  //   ws.onclose = () => {
-  //     console.log("WebSocket disconnected");
-  //   };
-
-  //   ws.onerror = (error) => {
-  //     console.error("WebSocket error", error);
-  //   };
-
-  //   ws.onmessage = (event) => {
-  //     console.log("پیام از وب‌سوکت دریافت شد:", event.data);
-  //   };
-
-  //   return () => {
-  //     ws.close();
-  //   };
-  // }, [gameId]);
-
-  // گرفتن پروفایل کاربر بعد از لود اولیه صفحه
+  // گرفتن پروفایل کاربر
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const { data } = await api.get("/profile/");
-        setProfile(data.username); // ذخیره نام کاربری
+        setProfile(data.username);
       } catch (error) {
         console.error("خطا در دریافت پروفایل:", error);
       }
@@ -88,51 +42,58 @@ export default function GameBoardPage() {
     fetchProfile();
   }, []);
 
-  // گرفتن وضعیت بازی از سرور هر بار که gameId تغییر کند
+  // گرفتن وضعیت بازی اولیه
   useEffect(() => {
     if (!gameId) return;
 
-    async function fetchGame() {
+    const fetchGame = async () => {
       try {
         const response = await api.get(`/games/${gameId}/status`);
-        setGame(response.data); // ذخیره داده‌های بازی
+        setGame(response.data);
       } catch (error) {
         console.error("خطا در دریافت وضعیت بازی:", error);
       }
-    }
+    };
 
     fetchGame();
   }, [gameId]);
 
+  // polling هر 3 ثانیه برای آپدیت وضعیت بازی
   useEffect(() => {
-    console.log("Game updated:", game);
-  }, [game]);
+    if (!gameId) return;
 
-  // به‌روزرسانی اطلاعات بازی با توجه به نام کاربری و داده‌های بازی
+    const interval = setInterval(async () => {
+      try {
+        const response = await api.get(`/games/${gameId}/status`);
+        setGame(response.data);
+      } catch (error) {
+        console.error("خطا در دریافت وضعیت بازی:", error);
+      }
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [gameId]);
+
+  // به‌روزرسانی داده‌ها بر اساس بازی و کاربر
   useEffect(() => {
-    // اگر نام کاربری موجود نبود، رد شو
-    if (!username) return;
+    if (!username || !game) return;
 
-    // اگر حدسی برای این کاربر نیست، آرایه خالی در نظر بگیر (برای حالت حدس نزده)
     const guessesForUser = game?.guesses?.[username] || [];
-
-    // ایجاد آرایه اولیه خالی به طول کلمه بازی
     const initialLetters = Array(game?.word_length || 0).fill("");
 
-    // پر کردن آرایه با حروف صحیح حدس زده شده
     guessesForUser.forEach(({ position, letter, is_correct }) => {
       if (is_correct) {
         initialLetters[position] = letter;
       }
     });
 
-    setFoundLetters(initialLetters); // ذخیره حروف صحیح پیدا شده
-    setTempLetters(Array(game?.word_length || 0).fill("")); // پاک کردن حروف موقت
-    setWordLength(game?.word_length || 0); // تنظیم طول کلمه بازی
-    setTimeRemainingSeconds(Math.floor(game?.time_remaining_minutes * 60) || 0); // تنظیم تایمر
+    setFoundLetters(initialLetters);
+    setTempLetters(Array(game?.word_length || 0).fill(""));
+    setWordLength(game?.word_length || 0);
+    setTimeRemainingSeconds(Math.floor(game?.time_remaining_minutes * 60) || 0);
   }, [username, game]);
 
-  // محاسبه اطلاعات بازیکن خودی با useMemo برای بهینه‌سازی رندر
+  // محاسبه اطلاعات بازیکن خودی
   const selfPlayer = useMemo(() => {
     if (!username || !game?.players) return null;
 
@@ -151,7 +112,7 @@ export default function GameBoardPage() {
     };
   }, [username, game]);
 
-  // محاسبه اطلاعات حریف مشابه بالا
+  // محاسبه اطلاعات حریف
   const opponentPlayer = useMemo(() => {
     if (!username || !game?.players) return null;
 
@@ -170,20 +131,12 @@ export default function GameBoardPage() {
     };
   }, [username, game]);
 
-  // آیا نوبت کاربر است؟
-  const isUsersTurn = game?.current_turn === username;
-  const wordDescription = game?.word_description || "توضیح کلمه اینجاست";
-
-  // تشخیص وجود برنده و تنظیم وضعیت مربوطه
+  // تشخیص برنده
   useEffect(() => {
-    if (!game?.winner) {
-      setHasWinner(false);
-      return;
-    }
-    setHasWinner(true);
+    setHasWinner(!!game?.winner);
   }, [game?.winner]);
 
-  // اضافه و حذف کلاس css برای صفحه بازی
+  // کلاس css برای صفحه
   useEffect(() => {
     document.body.classList.add("game-bp");
     return () => {
@@ -191,42 +144,76 @@ export default function GameBoardPage() {
     };
   }, []);
 
-  // تایمر کاهشی زمان باقی‌مانده بازی
+  // تایمر کاهشی
+  // useEffect(() => {
+  //   if (timeRemainingSeconds <= 0) return;
+
+  //   const interval = setInterval(() => {
+  //     setTimeRemainingSeconds((prev) => (prev <= 1 ? 0 : prev - 1));
+  //   }, 1000);
+
+  //   return () => clearInterval(interval);
+  // }, [timeRemainingSeconds]);
+
+  const isUsersTurn = game?.current_turn === username;
+  // تایمر کاهشی
   useEffect(() => {
-    if (timeRemainingSeconds <= 0) return;
+    if (timeRemainingSeconds <= 0) {
+      if (isUsersTurn && game && username) {
+        const autoSubmitGuess = async () => {
+          try {
+            const fallbackLetter = "ا"; // یا حرف تصادفی از حروف فارسی
+            await api.post(`/games/${gameId}/guess/`, {
+              letter: fallbackLetter,
+              position: 2,
+            });
+
+            // بازی را دوباره بگیر و صفحه را رفرش کن یا بروزرسانی کن
+            const updatedGame = await api.get(`/games/${gameId}/status`);
+            setGame(updatedGame.data);
+            setTempLetters(Array(wordLength).fill(""));
+          } catch (error) {
+            console.error("خطا در ارسال حدس خودکار:", error);
+          }
+        };
+
+        autoSubmitGuess();
+      }
+
+      return; // تایمر تمام شده، دیگر شمارش نکن
+    }
 
     const interval = setInterval(() => {
-      setTimeRemainingSeconds((prev) => {
-        if (prev <= 1) {
-          clearInterval(interval);
-          return 0;
-        }
-        return prev - 1;
-      });
+      setTimeRemainingSeconds((prev) => (prev <= 1 ? 0 : prev - 1));
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [timeRemainingSeconds]);
+  }, [
+    timeRemainingSeconds,
+    isUsersTurn,
+    game,
+    username,
+    foundLetters,
+    gameId,
+    wordLength,
+  ]);
 
-  // تبدیل زمان ثانیه به قالب mm : ss
   const formatTime = (seconds) => {
     const min = Math.floor(seconds / 60);
     const sec = seconds % 60;
-    return `${min.toString().padStart(2, "0")} : ${sec
+    return ` ${sec.toString().padStart(2, "0")} : ${min
       .toString()
-      .padStart(2, "0")}`;
+      .padStart(2, "0")} `;
   };
 
-  // خروج از صفحه بازی به داشبورد
   const handleExit = () => {
     navigate("/my-games");
   };
 
-  // متوقف کردن بازی با هشدار ساده
   const handlePause = async () => {
     try {
       const response = await api.post(`/games/${gameId}/pause/`);
-      alert(response.data.message); // پیام موفق یا خطا
+      alert(response.data.message);
       navigate("/my-games");
     } catch (error) {
       if (error.response && error.response.data) {
@@ -237,21 +224,15 @@ export default function GameBoardPage() {
     }
   };
 
-  // کلیک روی جعبه برای انتخاب جایگاه وارد کردن حرف
   const handleBoxClick = (index) => {
-    // اگر قبلاً حرف درست وارد شده بود، اجازه انتخاب نمیده
     if (foundLetters[index] !== "") return;
     setSelectedIndex(index);
   };
 
-  // کلیک روی حرف کیبورد برای وارد کردن حرف موقت
   const handleLetterClick = (letter) => {
-    // اگر جایگاهی انتخاب نشده بود، کاری نکن
     if (selectedIndex === null) return;
-    // اگر آن جایگاه قبلاً حرف درست داشت، اجازه تغییر نمیده
     if (foundLetters[selectedIndex] !== "") return;
 
-    // ایجاد آرایه جدید برای حروف موقت، فقط جایگاه انتخاب شده حرف دارد
     const newTempLetters = Array(wordLength).fill("");
     newTempLetters[selectedIndex] = letter;
 
@@ -259,15 +240,13 @@ export default function GameBoardPage() {
     setSelectedIndex(null);
   };
 
-  // اگر داده‌های لازم هنوز نیومده، نمایش پیام بارگذاری
   if (!game || !selfPlayer || !opponentPlayer) {
     return <div>در حال بارگذاری...</div>;
   }
 
-  // تابع ارسال حدس به سرور
+  // اصلاح شده: ارسال حدس و آپدیت بدون رفرش صفحه
   const handleSubmitGuess = async () => {
     try {
-      // پیدا کردن ایندکس و حرفی که موقت انتخاب شده
       const guessIndex = tempLetters.findIndex((l) => l !== "");
       if (guessIndex === -1) {
         alert("هیچ حرفی انتخاب نشده است!");
@@ -275,25 +254,19 @@ export default function GameBoardPage() {
       }
       const letter = tempLetters[guessIndex];
 
-      // درخواست POST به سرور
       const response = await api.post(`/games/${gameId}/guess/`, {
         letter,
         position: guessIndex,
       });
 
-      // پیام موفقیت یا خطا را نشان بده
       alert(response.data.message);
 
-      // اگر میخوای امتیاز رو هم نمایش بدی می‌تونی اینجا استفاده کنی:
-      // alert(`امتیاز شما: ${response.data.score}`);
+      // آپدیت بازی بدون رفرش صفحه
+      const updatedGame = await api.get(`/games/${gameId}/status`);
+      setGame(updatedGame.data);
 
-      // رفرش صفحه (این روش ساده است)
-      window.location.reload();
-
-      // یا می‌تونی از navigate هم استفاده کنی:
-      // navigate(`/game/${gameId}`, { replace: true });
+      setTempLetters(Array(wordLength).fill(""));
     } catch (error) {
-      // هندل خطاهای 400 و نمایش پیام مناسب
       if (error.response) {
         alert(`خطا: ${error.response.data.error || "خطایی رخ داده است."}`);
       } else {
@@ -313,7 +286,6 @@ export default function GameBoardPage() {
       setLetterHintPosition("");
     } catch (error) {
       alert(`خطا: ${JSON.stringify(error.response.data.error)}`);
-      // alert("خطا در دریافت راهنمای حرف.");
       console.error(error);
     }
   };
@@ -330,9 +302,10 @@ export default function GameBoardPage() {
     }
   };
 
+  const wordDescription = game?.word_description || "توضیح کلمه اینجاست";
+
   return (
     <div className="game-board-page">
-      {/* دکمه‌های ثابت برای توقف و خروج */}
       <div className="fixed-buttons">
         <button className="pause-button" onClick={handlePause}>
           متوقف کردن بازی
@@ -342,25 +315,25 @@ export default function GameBoardPage() {
         </button>
       </div>
 
-      {/* نمایش تایمر */}
-      <div className="timer-box">
-        تایمر:
-        {formatTime(timeRemainingSeconds)}
-      </div>
+      <div className="timer-box">تایمر: {formatTime(timeRemainingSeconds)}</div>
 
-      {/* هدر صفحه */}
       <div className="header">
         <Header />
       </div>
 
-      {/* محتوای بازی */}
       <div
         className={`game-container ${
           !isUsersTurn || hasWinner ? "disabled" : ""
         }`}
       >
-        {/* اگر نوبت کاربر نیست، پیام انتظار نمایش داده شود */}
-        {!isUsersTurn && (
+        {hasWinner && (
+          <div className="overlay-message">
+            {game.winner === "draw"
+              ? "بازی مساوی شد!"
+              : `بازی به اتمام رسید. ${game.winner} برنده است.`}
+          </div>
+        )}
+        {!isUsersTurn && !hasWinner && (
           <div className="overlay-message">
             <img
               src="/images/waiting.png"
@@ -371,15 +344,6 @@ export default function GameBoardPage() {
           </div>
         )}
 
-        {/* اگر نوبت کاربر نیست، پیام انتظار نمایش داده شود */}
-        {hasWinner && (
-          <div className="overlay-message">
-            بازی به اتمام رسید.
-             کاربر {game.winner} برنده شد.
-          </div>
-        )}
-
-        {/* ستون چپ: کارت بازیکن خودی و راهنما */}
         <div className="left-column">
           <PlayerCard
             profileUrl={selfPlayer.profile}
@@ -399,7 +363,6 @@ export default function GameBoardPage() {
           </div>
         </div>
 
-        {/* محتوای اصلی بازی: توضیح کلمه، جعبه حروف، کیبورد و دکمه ثبت حدس */}
         <div className="game-content">
           <h2 className="word-description">{wordDescription}</h2>
           <div className="letter-boxes">
@@ -448,7 +411,6 @@ export default function GameBoardPage() {
           </div>
         </div>
 
-        {/* کارت بازیکن حریف */}
         <PlayerCard
           profileUrl={opponentPlayer.profile}
           username={opponentPlayer.username}
@@ -471,11 +433,15 @@ export default function GameBoardPage() {
             />
             <div className="modal-buttons">
               <button onClick={handleLetterHint}>تأیید</button>
-              <button onClick={() => setShowLetterHintModal(false)}>
-                بستن
-              </button>
+              <button onClick={() => setShowLetterHintModal(false)}>لغو</button>
             </div>
           </div>
+        </div>
+      )}
+
+      {hasWinner && (
+        <div className="winner-message">
+          بازی تمام شده است. برنده: {game.winner}
         </div>
       )}
     </div>
