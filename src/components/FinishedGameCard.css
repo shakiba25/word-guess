@@ -1,0 +1,143 @@
+.finished-game-card {
+  border: 3px solid #6a00ff31;
+  border-radius: 10px;
+  padding: 16px;
+  margin: 15px 0;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  direction: rtl;
+  
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  margin-bottom: 5px;
+  margin-right: 150px;
+
+  width: 50vw;
+}
+.finished-game-card:hover {
+  transform: scale(1.03);
+}
+
+
+
+.players-box {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px; /* فاصله کمتر بین باکس‌ها */
+  margin-bottom: 16px;
+  margin-top: 20px;
+  position: relative;
+
+  
+}
+
+.player-box {
+  height: 20vh;
+  width: 150px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #f0f0f0;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  transition: none; /* هاور برداشته شده از اینجا */
+}
+
+.player-box.winner {
+  /* background: #e6ffe6;
+  border: 2px solid #00bb2c; */
+  width: 170px;       /* بزرگ‌تر */
+  padding: 16px;      /* پدینگ بیشتر */
+  animation: winnerPulse 2s infinite ease-in-out;
+  background : #e4b8ff;
+  border: 2.5px solid #410073; /* طلایی براق */
+  box-shadow: 0 0 20px 3px #fff1bb, 0 4px 10px rgba(255, 215, 0, 0.6);
+}
+
+@keyframes winnerPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.player-box.loser {
+  background: #b3b6ff; /* بنفش-آبی روشن */
+  border: 2px solid #2c2f70; /* بنفش تیره */
+  color: #111;
+}
+
+.finished-game-card .player-avatar {
+  margin: auto;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.score {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* VS آیکون وسط بین دو بازیکن */
+.vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vs-icon {
+  width: 50px;
+  height: auto;
+}
+
+/* آیکون برنده / بازنده بالای وسط باکس بازیکن */
+.badge {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+}
+
+.badge img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0%;
+}
+
+/* اطلاعات بازی */
+.game-details {
+  font-size: 0.95rem;
+  color: #444;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid #ddd;
+}
+.content-box.finished-games-box {
+  overflow-y: auto; /* حتماً اسکرول فعال باشه */
+}
+
+/* Webkit-based browsers (Chrome, Edge, Safari) */
+.content-box.finished-games-box::-webkit-scrollbar {
+  width: 8px;
+}
+
+.content-box.finished-games-box::-webkit-scrollbar-thumb {
+  background-color: #9b4dff; /* بنفش */
+  border-radius: 4px;
+}

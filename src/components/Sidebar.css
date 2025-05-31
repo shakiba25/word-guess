@@ -1,0 +1,168 @@
+.sidebar {
+    width: 250px;
+    background-color: #ffffff;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    border-radius: 20px;
+    margin-top:19px;
+    margin-bottom:20px;
+    margin-right: 30px;
+      overflow-y: auto; /* اسکرول داخلی زمانی که محتوا بیشتر از فضای عمودی سایدبار بشه */
+overflow-x: hidden;
+}
+
+/* استایل دادن به اسکرول */
+.sidebar::-webkit-scrollbar {
+  width: 10px; /* عرض اسکرول */
+  height: 10px; /* ارتفاع اسکرول (در صورت نیاز) */
+
+}
+
+/* تغییر مکان اسکرولر به سمت راست */
+.sidebar::-webkit-scrollbar {
+  transform: rotate(180deg); /* این باعث میشه که اسکرولر از سمت راست ظاهر بشه */
+}
+
+/* استایل دادن به رنگ و شکل اسکرول */
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
+  border-radius: 5px;
+  border: 2px solid #fff; /* حاشیه برای تمایز بیشتر */
+}
+  
+  .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 15px;
+    padding-top: 1%;
+    
+  }
+  
+  .profile-img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-bottom: 0px;
+    border: 3px solid black; /* اضافه کردن بوردر مشکی */
+
+  }
+  
+  .username {
+    font-size: 18px;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+  }
+  
+  /* .sidebar-btn {
+    background-color: #fed139;
+    color: black;
+    padding: 10px 15px;
+    margin: 10px 0;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    transition: 0.3s;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+   */
+  .sidebar-btn img.icon {
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+  }
+  
+  .sidebar-btn:hover {
+    background-color: #fffce5;
+  }
+  
+
+  /* دکمه زرد (موجود) */
+.sidebar-btn.yellow {
+  background-color: #fed139; /* رنگ پس‌زمینه */
+  color: black;
+  padding: 15px 15px;
+  margin: 10px 25px;
+  width: 85%;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border: 1px solid #fed139; /* بوردر  */
+  text-align: center;
+}
+
+.sidebar-btn.yellow:hover {
+  background-color: #fffce5;
+  border: 1px solid rgb(255, 183, 0); /* بوردر خاکستری */
+
+}
+
+/* دکمه سفید با بوردر خاکستری (دکمه خروج) */
+.sidebar-btn.white-gray {
+  background-color: white;
+  color: gray;
+  padding: 10px 15px;
+  margin: 30px 0;
+  width: 100%;
+  border: 2px solid rgb(177, 177, 177); /* بوردر خاکستری */
+  border-radius: 8px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  transition: 0.3s;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+}
+
+.sidebar-btn.white-gray:hover {
+  background-color: #f2f2f2; /* پس‌زمینه روشن‌تر در هاور */
+  color: black; /* رنگ متن مشکی در هاور */
+  border-color: black; /* بوردر مشکی در هاور */
+}
+
+/* دکمه رنگی با بوردر نامحسوس و شادو */
+.sidebar-btn.colorful {
+  background-color: #EEF1F4; /* رنگ پس‌زمینه */
+  color: black;
+  padding: 10px 15px;
+  margin: 10px 0;
+  width: 85%;
+  border: 1px solid rgb(177, 177, 177); /* بوردر خاکستری */
+  border-radius: 8px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* شادو ملایم */
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.sidebar-btn.colorful:hover {
+  background-color: #d8e1e9; /* پس‌زمینه روشن‌تر در هاور */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* شادوی قوی‌تر در هاور */
+}
+
+.info{
+  margin: 0px;
+}

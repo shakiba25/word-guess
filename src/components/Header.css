@@ -1,0 +1,12 @@
+.dashboard-header {
+    background-color: #3f38d4;
+    color: white;
+    text-align: center;
+    padding: 15px 0;    
+    font-size: 1.8rem;
+    font-weight: 800;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  }
+  

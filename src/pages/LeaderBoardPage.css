@@ -1,0 +1,300 @@
+/* فقط داخل صفحه لیدربورد استفاده میشه با کلاس پدر leaderboard-page */
+
+.leaderboard-page .leaderboard-container {
+  width: 60vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  position: relative;
+  padding-bottom: 80px; /* جای کافی برای لیست زیر */
+}
+
+.leaderboard-page .podium {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  width: 50vw;
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 42px; /* فاصله پودیوم با لیست پایین‌تر (حل مشکل رندر پایین‌تر از باکس) */
+}
+
+/* باکس هر بازیکن (نفرات اول تا سوم) */
+.leaderboard-page .player-box {
+  background: white;
+  border-radius: 12px 10px 0px 0px;
+
+  width: 150px;
+  padding: 1px 12px; /* کمتر شد برای نزدیک‌تر کردن محتوا */
+  box-shadow: 4px 4px 4px 5px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  gap: 4px; /* فاصله داخلی کم بین آیتم‌ها */
+}
+
+/* تصویر داخل player-box */
+.leaderboard-page .player-box img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: 5px;
+  margin-bottom: 5px; /* کمتر برای نزدیک‌تر کردن */
+}
+
+/* اسم بازیکن */
+.leaderboard-page .player-box h3 {
+  margin: 0px 0 0px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #370057;
+}
+
+/* متن امتیاز */
+.leaderboard-page .player-box p {
+  margin: 2px 0 2px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* رنک متنی در سه نفر اول */
+.leaderboard-page .player-rank-text {
+  margin-top: 2px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #470070;
+}
+
+/* نفر اول بلندتر */
+.leaderboard-page .player-first {
+  height: 270px;
+  /* margin-bottom: 30px; */
+
+}
+
+/* نفر دوم کمی کوتاه‌تر */
+.leaderboard-page .player-second {
+  height: 240px;
+  /* margin-bottom: 30px; */
+}
+
+/* نفر سوم کوتاه‌تر و پایین‌تر */
+.leaderboard-page .player-third {
+  height: 225px;
+  /* margin-bottom: 150px; */
+}
+
+/* سکوی پایین زیر همه */
+/* با margin-bottom در podium پایین‌تر اومده */
+.leaderboard-page .podium-step {
+  position: absolute;
+  bottom: -10px; /* پایین‌تر از قبل برای رفع مشکل گرفتن اطلاعات */
+  width: 50px;
+  height: 40px;
+  border-radius: 8px 8px 0 0;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.leaderboard-page .player-first .podium-step {
+  background-color: gold;
+  height: 70px;
+  width: 120px;
+  bottom: 10px; /* پایین‌تر شده */
+  font-size: 1.5rem;
+}
+
+.leaderboard-page .player-second .podium-step {
+  background-color: silver;
+  height: 50px;
+  width: 9vw;
+  bottom: 10px; /* پایین‌تر */
+  font-size: 1.3rem;
+}
+
+.leaderboard-page .player-third .podium-step {
+  background-color: #cd7f32;
+  height: 35px;
+  width: 85px;
+  bottom: 10px; /* پایین‌تر */
+  font-size: 1.2rem;
+}
+
+/* خط افقی زیر سکو */
+.leaderboard-page .podium::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background-color: #444;
+  border-radius: 8px 8px 0 0;
+  z-index: 0;
+}
+
+/* کارت های نفرات 4 تا 10 */
+.leaderboard-page .other-players-list {
+  margin-top: 20px; /* فاصله از سکو */
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  /* padding: 0 20px; */
+  width: 90%;
+  max-width: none;
+  scroll-padding-right: 300px;
+  padding-right: 214px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 5px;
+  border: 3px solid #cfcfcf;
+  box-shadow: 0 12px 16px rgba(0,0,0,0.12);
+
+  
+}
+
+.leaderboard-page .player-card {
+  background: white;
+  border-radius: 10px;
+  width: 140px;
+  height: 16vh;
+  padding: 8px 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.user-h4{
+  margin: 0px;
+
+}
+.leaderboard-page .player-card img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+}
+
+.leaderboard-page .player-info h4 {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.leaderboard-page .player-info p {
+  margin: 2px 0 0;
+  font-size: 0.8rem;
+  color: #555;
+}
+
+/* عدد رتبه برای نفرات 4 تا 10 */
+.leaderboard-page .player-rank {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 24px;
+  height: 24px;
+  background-color: #333;
+  color: white;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* استایل اصلی صفحه */
+.leaderboard-page .main-content-leader {
+  margin-right: 310px; /* جای سایدبار */
+  width: calc(100% - 310px); /* فضای باقی‌مانده */
+  padding: 19px;
+  box-sizing: border-box;
+  background-color: #8d84ff;
+  margin-left: 11px;
+  height: 100vh;
+}
+
+/* انیمیشن برق خطی */
+@keyframes electric-shine {
+  0% {
+    left: -50%;
+    opacity: 0;
+  }
+  50% {
+    left: 100%;
+    opacity: 1;
+  }
+  100% {
+    left: 150%;
+    opacity: 0;
+  }
+}
+
+/* برق نازک روی سکوی نفر اول */
+.leaderboard-page .player-first .podium-step::before,
+.leaderboard-page .player-second .podium-step::before,
+.leaderboard-page .player-third .podium-step::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 30%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.7),
+    transparent
+  );
+  opacity: 0;
+  transform: skewX(-25deg);
+  animation: electric-shine 2s linear infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.leaderboard-page .player-first .podium-step,
+.leaderboard-page .player-second .podium-step,
+.leaderboard-page .player-third .podium-step {
+  overflow: hidden;
+}
+
+/* استایل اسکرول بار افقی */
+.leaderboard-page .other-players-list::-webkit-scrollbar {
+  height: 8px;
+}
+
+.leaderboard-page .other-players-list::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+
+.leaderboard-page .other-players-list::-webkit-scrollbar-thumb {
+  background-color: #8d84ff;
+  border-radius: 4px;
+  border: 2px solid #f0f0f0;
+}
+
+.leaderboard-page .leaderboard-container::-webkit-scrollbar-track {
+  background: #e0e0e0; /* رنگ مسیر اسکرول */
+}
+
+.leaderboard-page .leaderboard-container::-webkit-scrollbar-thumb {
+  background-color: #8d84ff; /* رنگ اسکرول بار */
+}

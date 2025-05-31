@@ -1,0 +1,128 @@
+/* ActiveGameCard.css */
+.active-game-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 15px 20px;
+  margin-bottom: 16px;
+  color: #333;
+  direction: rtl;
+}
+
+/* سطر بازیکنان */
+.active-game-card .players-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+/* هر ستون بازیکن */
+.active-game-card .player-col {
+  display: flex;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 22px 16px;
+  border-radius: 10px;
+  width: 48%;
+  box-shadow: inset 0 0 5px #ddd;
+  transition: background-color 0.3s ease;
+  position: relative;
+}
+
+.active-game-card .player-col.active-turn {
+  background-color: #e0d8ff;
+  box-shadow: 0 0 10px #8d84ff;
+}
+
+.active-game-card .player-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-left: 12px;
+  border: 2px solid #8d84ff;
+}
+
+.active-game-card .player-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.active-game-card .player-main-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.active-game-card .player-name {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.active-game-card .player-score {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.active-game-card .turn-indicator {
+  white-space: nowrap;
+  font-size: 0.85rem;
+  color: #673ab7;
+  font-weight: 700;
+  margin-left: 10px;
+}
+
+.active-game-card .game-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.active-game-card .game-id {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #444;
+}
+
+.active-game-card .difficulty {
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: #fff;
+  user-select: none;
+}
+
+/* .active-game-card .difficulty.easy {
+  background-color: #4caf50;
+}
+.active-game-card .difficulty.medium {
+  background-color: #ffb300;
+}
+.active-game-card .difficulty.hard {
+  background-color: #e53935;
+} */
+
+.active-game-card .started-at {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.active-game-card .enter-game-btn {
+  background-color: #8d84ff;
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.active-game-card .enter-game-btn:hover {
+  background-color: #6f65d4;
+}

@@ -1,0 +1,24 @@
+body.history-page
+#root{
+  height: 100%;
+  width: 100%;
+    margin: 0;
+  padding: 0;
+}
+.history-page {
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: #8d84ff;
+  direction: rtl;
+  position: relative;
+}
+
+.content-box.finished-games-box{
+    max-height: 65vh;
+}
+
+.history-title{
+    font-size: 30px;
+    font-weight: bold;
+}

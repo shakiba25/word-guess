@@ -1,0 +1,124 @@
+/* پس‌زمینه صفحه ثبت نام */
+.signup-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* padding: 0 0px; */
+    font-family: 'Estedad', sans-serif;
+    direction: rtl; /* راست به چپ */
+    text-align: right; /* تراز متن به سمت راست */
+    margin-bottom: 10vh;
+}
+
+/* استایل برای عنوان "ثبت نام" */
+.signup-title {
+    font-family: 'Estedad', sans-serif;
+    font-size: 3rem; /* اندازه فونت */
+    font-weight: 1000;
+    color: white;
+    -webkit-text-stroke: 2px rgb(0, 0, 0);
+    margin-bottom: 20px; /* فاصله با فرم */
+    padding: 10px;
+    width: 100%; /* عرض کامل */
+    text-align: center; /* تراز متن به وسط */
+}
+
+/* فرم ثبت نام */
+.signup-container {
+    background-color: rgb(255, 255, 255);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+}
+
+.signup-container h1 {
+    font-size: 2em;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+    border: 2px solid white;
+    padding: 10px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.input-box {
+    margin-bottom: 10px;
+    text-align: left;
+    
+
+}
+
+.input-box label {
+    font-size: 1em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+    text-align: right;
+}
+
+.input-box input {
+    font-family: 'Estedad', sans-serif;
+    width: 100%;
+    max-height: 50px;
+    padding: 12px;
+    font-size: 1em;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: 0.3s ease;
+}
+
+.input-box input:focus {
+    border-color: #6C63FF;
+    outline: none;
+    box-shadow: 0 0 10px rgba(108, 99, 255, 0.3);
+}
+
+.signup-button {
+    width: 75%;
+    padding: 12px;
+    margin-top: 45px;
+    background-color: #FED139;
+    color: black;
+    border: 2px solid #FED139;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.signup-button:hover {
+    background-color: #fffce5;
+    border: 2px solid #FED139;
+}
+
+.login-link {
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #333;
+}
+
+.login-link a {
+    color: #FED139;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+.Toastify__toast--error{
+        font-family: 'estedad';
+        background-color: rgb(255, 185, 185);
+        color: #000000;
+}

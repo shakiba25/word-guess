@@ -1,0 +1,144 @@
+/* استایل‌های عمومی */
+body, html {
+  margin: 0;
+  padding: 0;
+  background-color: #7c72ff;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body.cg-page #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* استایل‌های صفحه ساخت بازی */
+.create-game {
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: #8d84ff;
+  direction: rtl;
+  position: relative;
+}
+
+/* قسمت محتوای اصلی */
+.main-content1 {
+  margin-right: 330px; /* جبران فضای sidebar */
+  width: calc(100% - 150px);
+  padding: 19px;
+  box-sizing: border-box;
+  background-color: #8d84ff;
+  height: 100vh; /* ارتفاع کامل ویوپورت */
+
+
+}
+
+.header {
+  background-color: #8d84ff;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+/* استایل محتوا */
+.content-box {
+  background: white;
+  color: black;
+  padding: 20px;
+  margin-top: 5px;
+  border-radius: 10px;
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+  /* ارتفاع خودکار برای جلوگیری از اسکرول */
+  max-height: calc(100vh - 158px); /* حداکثر ارتفاع به اندازه فضای باقی‌مانده از صفحه */
+  overflow-y: auto; /* اگر محتوا زیاد شد، اسکرول داخلی فعال بشه */
+
+}
+
+/* استایل سایدبار */
+/* .sidebar {
+  width: 250px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  margin-right: 30px;
+  margin-top: 19px;
+} */
+
+/* استایل‌های اختصاصی صفحه ساخت بازی */
+
+/* .create-game .content-box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+} */
+
+/* استایل برای تایتل "ساخت بازی جدید :" */
+.create-game h2 {
+  font-size: 1.8em;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* باکس انتخاب سطح بازی */
+.create-game .level-box,
+.create-game .ai-box {
+  background-color: #eeeeee;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: right; /* راست چین کردن محتوای داخل باکس */
+}
+
+.create-game .level-box h3,
+.create-game .ai-box label {
+  font-size: 1.2em;
+  color: #333;
+}
+
+.create-game .level-options label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* استایل برای آیکن هوش مصنوعی */
+.create-game .ai-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+}
+
+/* دکمه "ایجاد بازی" */
+.create-game .create-game-btn { /* اسم استایل دکمه رو تغییر دادم */
+  background-color: #fed139;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: block;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.create-game .create-game-btn:hover { /* همونطور که خواستی تغییرات برای دکمه */
+  background-color: #fffce5;
+  color: #a47e00;
+  box-shadow: 0 6px 16px rgba(254, 209, 57, 0.4);
+}
