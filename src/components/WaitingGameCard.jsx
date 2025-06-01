@@ -55,7 +55,7 @@ const WaitingGameCard = ({ game }) => {
         {/* تاریخ ساخت */}
         <div className="col created-date">{formatDate(game.created_at)}</div>
 
-        {/* دکمه پیوستن */}
+        {/* دکمه حذف */}
         <div className="col delete-btn-col">
           <button className="delete-btn">حذف بازی</button>
         </div>

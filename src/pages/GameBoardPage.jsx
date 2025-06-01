@@ -12,6 +12,7 @@ const FarsiLetters = [
   ["ه", "خ", "ح", "ج", "چ", "ش", "س"],
   ["ی", "ب", "ل", "ا", "ت", "ن", "م"],
   ["ک", "گ", "ظ", "ط", "ز", "ر", "ذ"],
+  ["د", "پ", "و", "ژ", "ئ", "آ"]
 ];
 
 export default function GameBoardPage() {
@@ -115,19 +116,15 @@ export default function GameBoardPage() {
   // محاسبه اطلاعات حریف
   const opponentPlayer = useMemo(() => {
     if (!username || !game?.players) return null;
-
+  
     const player = game.players.find((p) => p.username !== username);
     if (!player) return null;
-
+  
     return {
       profile: player.avatar || "/images/profile-opponent.png",
       username: player.username || "حریف",
       score: player.score || 0,
-      guesses: (game.guesses?.[player.username] || []).map((g) => ({
-        position: g.position,
-        letter: g.letter,
-        is_correct: g.is_correct,
-      })),
+      guesses: [], // 
     };
   }, [username, game]);
 
@@ -145,65 +142,22 @@ export default function GameBoardPage() {
   }, []);
 
   // تایمر کاهشی
-  // useEffect(() => {
-  //   if (timeRemainingSeconds <= 0) return;
-
-  //   const interval = setInterval(() => {
-  //     setTimeRemainingSeconds((prev) => (prev <= 1 ? 0 : prev - 1));
-  //   }, 1000);
-
-  //   return () => clearInterval(interval);
-  // }, [timeRemainingSeconds]);
-
-  const isUsersTurn = game?.current_turn === username;
-  // تایمر کاهشی
   useEffect(() => {
-    if (timeRemainingSeconds <= 0) {
-      if (isUsersTurn && game && username) {
-        const autoSubmitGuess = async () => {
-          try {
-            const fallbackLetter = "ا"; // یا حرف تصادفی از حروف فارسی
-            await api.post(`/games/${gameId}/guess/`, {
-              letter: fallbackLetter,
-              position: 2,
-            });
-
-            // بازی را دوباره بگیر و صفحه را رفرش کن یا بروزرسانی کن
-            const updatedGame = await api.get(`/games/${gameId}/status`);
-            setGame(updatedGame.data);
-            setTempLetters(Array(wordLength).fill(""));
-          } catch (error) {
-            console.error("خطا در ارسال حدس خودکار:", error);
-          }
-        };
-
-        autoSubmitGuess();
-      }
-
-      return; // تایمر تمام شده، دیگر شمارش نکن
-    }
+    if (timeRemainingSeconds <= 0) return;
 
     const interval = setInterval(() => {
       setTimeRemainingSeconds((prev) => (prev <= 1 ? 0 : prev - 1));
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [
-    timeRemainingSeconds,
-    isUsersTurn,
-    game,
-    username,
-    foundLetters,
-    gameId,
-    wordLength,
-  ]);
+  }, [timeRemainingSeconds]);
 
   const formatTime = (seconds) => {
     const min = Math.floor(seconds / 60);
     const sec = seconds % 60;
-    return ` ${sec.toString().padStart(2, "0")} : ${min
+    return `: ${sec
       .toString()
-      .padStart(2, "0")} `;
+      .padStart(2, "0")} : ${min.toString().padStart(2, "0")} `;
   };
 
   const handleExit = () => {
@@ -244,7 +198,7 @@ export default function GameBoardPage() {
     return <div>در حال بارگذاری...</div>;
   }
 
-  // اصلاح شده: ارسال حدس و آپدیت بدون رفرش صفحه
+  //ارسال حدس و آپدیت بدون رفرش صفحه
   const handleSubmitGuess = async () => {
     try {
       const guessIndex = tempLetters.findIndex((l) => l !== "");
@@ -302,6 +256,7 @@ export default function GameBoardPage() {
     }
   };
 
+  const isUsersTurn = game?.current_turn === username;
   const wordDescription = game?.word_description || "توضیح کلمه اینجاست";
 
   return (
@@ -326,14 +281,7 @@ export default function GameBoardPage() {
           !isUsersTurn || hasWinner ? "disabled" : ""
         }`}
       >
-        {hasWinner && (
-          <div className="overlay-message">
-            {game.winner === "draw"
-              ? "بازی مساوی شد!"
-              : `بازی به اتمام رسید. ${game.winner} برنده است.`}
-          </div>
-        )}
-        {!isUsersTurn && !hasWinner && (
+        {!isUsersTurn && (
           <div className="overlay-message">
             <img
               src="/images/waiting.png"
@@ -440,7 +388,21 @@ export default function GameBoardPage() {
       )}
 
       {hasWinner && (
-        <div className="winner-message">
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: "#f0f0f0",
+            padding: "20px 30px",
+            borderRadius: "8px",
+            boxShadow: "0 0 10px rgba(0,0,0,0.3)",
+            fontSize: "1.5rem",
+            zIndex: 1000,
+            textAlign: "center"
+          }}
+        >
           بازی تمام شده است. برنده: {game.winner}
         </div>
       )}

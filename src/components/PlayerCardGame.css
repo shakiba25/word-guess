@@ -76,6 +76,7 @@
   background-color: #ffffff;
   border-color: #cd5c5c;
   color: #000000;
+  height: 10vh;
 }
 
 .player-card__guesses-section p {

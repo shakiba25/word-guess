@@ -30,21 +30,17 @@ const diffText = {
 const PausedGameCard = ({ game, currentUsername, onRestart }) => {
   const players = game.players || [];
 
-  // چک می‌کنیم player1 حتماً وجود داشته باشه
   if (!players[0]) {
     console.log("PausedGameCard skipped due to missing player1", game);
-    return null; // رندر نکن این کارت رو
+    return null; 
   }
 
-  // اگر player2 وجود نداره هم فقط لاگ بگیر ولی ادامه بده (طبق درخواستت)
   if (!players[1]) {
     console.log("PausedGameCard has only one player", game);
-    // می‌تونی اینجا همون رندر رو با یک بازیکن ادامه بدی یا همونطور که می‌خوای کارت رو نشون ندی
-    // برای نمونه اینجا فقط کارت رو با یک بازیکن می‌سازیم
   }
   const player1 = game.players[0];
   const player2 = game.players[1];
-  const pausedByUsername = game.paused_by; // اینجا دقت کن paused_by یک رشته است
+  const pausedByUsername = game.paused_by; 
 
   const pausedByCurrentUser = pausedByUsername === currentUsername;
 

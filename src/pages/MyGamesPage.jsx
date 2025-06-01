@@ -22,7 +22,7 @@ export default function MyGamesPage() {
     api
       .get("/profile/")
       .then((res) => {
-        setCurrentUser(res.data.username); // فرض کردم پاسخ این شکلیه: { username: "کاربر5", ... }
+        setCurrentUser(res.data.username); 
       })
       .catch(() => setCurrentUser(null));
   }, []);

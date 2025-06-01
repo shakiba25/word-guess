@@ -29,7 +29,7 @@ const diffText = {
 };
 
 const ActiveGameCard = ({ game, currentUser }) => {
-  const navigate = useNavigate(); // اینجا داخل کامپوننت
+  const navigate = useNavigate();
 
   // تابع برای ورود به صفحه بازی با gameId
   const handleEnterGame = () => {

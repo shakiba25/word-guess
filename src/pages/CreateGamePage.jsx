@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
-import Header from "../components/Header"; // ایمپورت هدر جدید
+import Header from "../components/Header"; 
 import "./CreateGamePage.css";
 import api from "../api";
 import { toast } from "react-toastify";
@@ -10,11 +10,9 @@ export default function CreateGamePage() {
   const [selectedLevel, setSelectedLevel] = useState("");
   const [aiEnabled, setAiEnabled] = useState(false);
 
-  // اضافه کردن کلاس 'cg-page' به body هنگام بارگذاری صفحه
   useEffect(() => {
     document.body.classList.add("cg-page"); // اضافه کردن کلاس
 
-    // تمیز کردن و حذف کلاس هنگام ترک کردن صفحه داشبورد
     return () => {
       document.body.classList.remove("cg-page"); // حذف کلاس
     };
@@ -49,10 +47,8 @@ export default function CreateGamePage() {
       console.error("خطا در ایجاد بازی:", error);
 
       if (error.response) {
-        // خطاهای سمت سرور
         toast.error(error.response.data.error || "خطایی رخ داده است");
       } else {
-        // خطای شبکه یا سمت کلاینت
         toast.error("عدم ارتباط با سرور");
       }
     }
@@ -102,7 +98,6 @@ export default function CreateGamePage() {
             </div>
           </div>
 
-          {/* Box for AI option */}
           <div className="ai-box">
             <label>
               <input
@@ -115,7 +110,6 @@ export default function CreateGamePage() {
             </label>
           </div>
 
-          {/* Button to create game */}
           <button onClick={handleCreateGame} className="create-game-btn">
             ایجاد بازی
           </button>

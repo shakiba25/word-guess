@@ -6,9 +6,9 @@ import App from './App'
 import './index.css'
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
-import DashboardPage from './pages/DashboardPage.jsx'; // 👈 اضافه‌شده
-import CreateGamePage from './pages/CreateGamePage.jsx'; // 👈 اضافه‌شده
-import LandingPage from './pages/L.jsx'; // 👈 اضافه‌شده
+import DashboardPage from './pages/DashboardPage.jsx'; 
+import CreateGamePage from './pages/CreateGamePage.jsx'; 
+import LandingPage from './pages/L.jsx'; 
 import GameBoardPage from './pages/GameBoardPage.jsx';
 import LeaderBoardPage from './pages/LeaderBoardPage.jsx';
 import JoinGamesPage from './pages/JoinGamesPage.jsx'
@@ -18,48 +18,48 @@ import HistoryPage from './pages/HistoryPage.jsx'
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LandingPage /> // صفحه لندینگ
+    element: <LandingPage /> 
   },
   {
     path: "/app",
-    element: <App /> // صفحه اصلی اپلیکیشن
+    element: <App /> 
   },
   {
     path: "/login", 
-    element: <LoginPage /> // صفحه ورود
+    element: <LoginPage />
   },
   {
     path: "/signup", 
-    element: <SignupPage /> // صفحه ثبت نام
+    element: <SignupPage />
   },
   {
     path: '/dashboard',
-    element: <DashboardPage /> // 👈 مسیر داشبورد
+    element: <DashboardPage /> 
   },
   {
     path: '/create-game',
-    element: <CreateGamePage /> // 👈 مسیر داشبورد
+    element: <CreateGamePage /> 
   },
   {
     path: '/leader-board',
-    element: <LeaderBoardPage /> // 👈 مسیر داشبورد
+    element: <LeaderBoardPage /> 
   }
   ,
   {
     path: '/game-board/:gameId',
-    element: <GameBoardPage /> // 👈 مسیر داشبورد
+    element: <GameBoardPage /> 
   },
   {
     path: '/join-game',
-    element: <JoinGamesPage /> // 👈 مسیر داشبورد
+    element: <JoinGamesPage />
   },
   {
     path: '/my-games',
-    element: <MyGamesPage /> // 👈 مسیر داشبورد
+    element: <MyGamesPage /> 
   },
   {
     path: '/history',
-    element: <HistoryPage /> // 👈 مسیر داشبورد
+    element: <HistoryPage /> 
   }
 ])
 

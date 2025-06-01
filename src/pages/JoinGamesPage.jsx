@@ -31,12 +31,9 @@ export default function JoinGamesPage() {
   };
 
   const handleJoinSuccess = (joinedGameId) => {
-    // ۲ حالت: حذف بازی از لیست یا رفرش کل لیست
     // اینجا رفرش کل لیست:
     fetchWaitingGames();
 
-    // اگر میخوای فقط بازی حذف بشه:
-    // setWaitingGames(prev => prev.filter(game => game.id !== joinedGameId));
   };
 
   const filteredGames = waitingGames.filter((game) => {
